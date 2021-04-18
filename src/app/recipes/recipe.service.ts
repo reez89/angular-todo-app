@@ -1,4 +1,5 @@
 import { EventEmitter } from "@angular/core";
+import { Ingridient } from "../shared/ingridients.model";
 import { Recipe } from "./recipe.model";
 
 export class RecipeService {
@@ -7,12 +8,21 @@ export class RecipeService {
     new Recipe(
       'A test Recipe',
       'This is simply a test',
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?webp=true&quality=90&resize=620%2C563'
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?webp=true&quality=90&resize=620%2C563',
+      [
+        new Ingridient('Meat', 1),
+        new Ingridient('Gnocchi', 100)
+      ]
     ),
     new Recipe(
       'Another test Recipe',
       'This is another simple test with angular',
-      'https://www.inspiredtaste.net/wp-content/uploads/2019/07/Crispy-Falafel-Recipe-2-1200.jpg'
+      'https://www.inspiredtaste.net/wp-content/uploads/2019/07/Crispy-Falafel-Recipe-2-1200.jpg',
+      [
+        new Ingridient('Salad',100),
+        new Ingridient('Falafel', 150),
+        new Ingridient('Bread', 50)
+      ]
     ),
   ];
 

@@ -15,4 +15,13 @@ export class ShoppingListService{
     this.ingridients.push(ingridient);
     this.ingridientsChange.emit(this.ingridients.slice()); //per questo aggiungiamo questo motodo che ci permette di aggiungere un nuovo componente e anche di visualizzarlo nel nostro sito.
   }
+
+  addIngridients(ingridients: Ingridient[]){
+    //for (let ingridient of ingridients){
+     // this.onIngridientAdded(ingridient);
+    //}
+    this.ingridients.push(...ingridients);
+    this.ingridientsChange.emit(this.ingridients.slice())
+  }
+
 }

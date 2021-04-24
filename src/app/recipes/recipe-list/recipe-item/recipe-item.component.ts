@@ -10,6 +10,7 @@ import { RecipeService } from '../../recipe.service';
 })
 export class RecipeItemComponent implements OnInit {
   @Input() item: Recipe;
+  // tslint:disable-next-line: max-line-length
   // questo item fa riferimento alla classe che abbiamo dichiarato in recipeListComponent, e quindi sarà riutilizzat nell'ngFor per visualizzare i dati.
   @Input() index: number;
 

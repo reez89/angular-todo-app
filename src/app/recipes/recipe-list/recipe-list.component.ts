@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -11,11 +12,16 @@ export class RecipeListComponent implements OnInit {
   /* @Output() recipeWasSelected = new EventEmitter<Recipe>(); */
   recipes: Recipe[] ;
 
-  constructor(private recipeService: RecipeService) {} //come per gli esercizi in precedenza, ora per utilizzare il service, devo crearmi il costruttore.
+  constructor(private recipeService: RecipeService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
-  //a questo punto, nell'ngOnInit, mi richiamo l'array delle ricette, creato nel
   ngOnInit(): void {
     this.recipes = this.recipeService.getRecipes();
+  }
+
+  onNewRecipe(){
+    this.router.navigate(['new'], {relativeTo: this.route});
   }
 
 

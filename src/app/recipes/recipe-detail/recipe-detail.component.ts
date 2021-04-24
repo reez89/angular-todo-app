@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 // tslint:disable-next-line: import-spacing
 import { Recipe } from  '../recipe.model';
 import { RecipeService } from '../recipe.service';
@@ -12,7 +12,9 @@ import { RecipeService } from '../recipe.service';
 export class RecipeDetailComponent implements OnInit {
   @Input() recipe: Recipe;
   id: number;
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) { }
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
     /* const id = this.route.snapshot.params['id']; */ // funziona solo la prima volta che carichiamo la pagina.
@@ -29,5 +31,10 @@ export class RecipeDetailComponent implements OnInit {
   // tslint:disable-next-line: typedef
   addToShippingList(){
     this.recipeService.addIngridientsToShippingList(this.recipe.ingridients);
+  }
+
+  onEditRecipe() {
+    /* this.router.navigate(['edit'], {relativeTo: this.route}); */
+    this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
   }
 }

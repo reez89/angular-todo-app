@@ -9,15 +9,17 @@ import { RecipeService } from '../../recipe.service';
   styleUrls: ['./recipe-item.component.css']
 })
 export class RecipeItemComponent implements OnInit {
-  @Input() item: Recipe; // questo item fa riferimento alla classe che abbiamo dichiarato in recipeListComponent, e quindi sarà riutilizzat nell'ngFor per visualizzare i dati.
+  @Input() item: Recipe;
+  // questo item fa riferimento alla classe che abbiamo dichiarato in recipeListComponent, e quindi sarà riutilizzat nell'ngFor per visualizzare i dati.
+  @Input() index: number;
 
  /*  @Output() recipeSelected = new EventEmitter<void>(); // void perchè non contiene nessuna informazione */
   constructor(private recipeService: RecipeService) {}
 
    ngOnInit(): void {}
 
-   onSelected(){
+   /* onSelected(){
     this.recipeService.recipeSelected.emit(this.item);
-  }
+  } */
 
 }

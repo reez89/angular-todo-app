@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,11 +6,13 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class HeaderComponent {
   collapsed = true;
-  //per poter rendere accessibile questo evento all'esterno devo creare un EventEmitter
-  @Output() featureSelected = new EventEmitter<string>();
+  // per poter rendere accessibile questo evento all'esterno devo creare un EventEmitter
+  /* @Output() featureSelected = new EventEmitter<string>(); */
 
-  //qui creo la funzione che mi restituirà in base all'elemento selzionato nel DOM, la mia "rotta"
-  onSelect(feature: string){
+  // qui creo la funzione che mi restituirà in base all'elemento selzionato nel DOM, la mia "rotta"
+ /*  onSelect(feature: string){
     this.featureSelected.emit(feature);
-  }
+  } */
+
+  // una volta settate le rotte, questi metodi diventano inutili, perchè sostituiti con router link.
 }

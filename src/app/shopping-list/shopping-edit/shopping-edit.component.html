@@ -11,6 +11,8 @@
             class="form-control"
             ngModel
             name="name"
+            required
+
             />
         </div>
         <div class="col-sm-2 from-group">
@@ -21,15 +23,24 @@
             class="form-control"
             ngModel
             name="amount"
+            required
+            pattern="^[1-9]+[0-9]*$"
              />
         </div>
       </div>
       <div class="row">
           <!-- PULSANTI PER INTERAGIRE CON LA LISTA -->
         <div class="col-xs-12">
-          <button class="btn btn-success" type="submit" >Add</button>
-          <button class="btn btn-danger" type="button">Delete</button>
-          <button class="btn btn-primary" type="button">clear</button>
+          <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="!f.valid" >Add</button>
+          <button
+          class="btn btn-danger"
+          type="button">Delete</button>
+          <button
+          class="btn btn-primary"
+          type="button">clear</button>
         </div>
       </div>
     </form>

@@ -6,6 +6,7 @@ import { Recipe } from './recipe.model';
 
 @Injectable()
 export class RecipeService {
+  recipeChanged = new Subject<Recipe[]>();
   recipeSelected = new Subject<Recipe>();
  private recipes: Recipe[] = [
     new Recipe(
@@ -45,5 +46,15 @@ constructor(private shoppingListService: ShoppingListService){}
   // tslint:disable-next-line: typedef
   addIngridientsToShippingList(ingridients: Ingridient[]){
     this.shoppingListService.addIngridients(ingridients);
+  }
+
+  addRecipe(recipe: Recipe){
+    this.recipes.push(recipe);
+    this.recipeChanged.next(this.recipes.slice())
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe){
+    this.recipes[index] = newRecipe;
+    this.recipeChanged.next(this.recipes.slice())
   }
 }

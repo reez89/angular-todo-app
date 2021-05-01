@@ -1,4 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { Ingridient } from '../../shared/ingridients.model';
 import { ShoppingListService } from '../shopping-list.service';
@@ -9,8 +10,9 @@ import { ShoppingListService } from '../shopping-list.service';
   styleUrls: ['./shopping-edit.component.css']
 })
 export class ShoppingEditComponent implements OnInit {
-  @ViewChild('nameInput', { static : true }) nameInputRef: ElementRef;
-  @ViewChild('amountInput', { static : true }) amountInputRef: ElementRef;
+   // con il nuovo metodo ngForm, non mi servono piu' questi riferimenti.
+  /* @ViewChild('nameInput', { static : true }) nameInputRef: ElementRef;
+  @ViewChild('amountInput', { static : true }) amountInputRef: ElementRef; */
   // tslint:disable-next-line: max-line-length
   /* @Output() ingridientAdded = new EventEmitter<Ingridient>(); */ // <{name: string, amount: number}> a questa dichiarazione possiamo sostituire direttamente il file condiviso Ingridient
   constructor(private shoppingListService: ShoppingListService) { }
@@ -19,10 +21,9 @@ export class ShoppingEditComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  onAddItem(){
-    const ingName = this.nameInputRef.nativeElement.value;
-    const ingAmount = this.amountInputRef.nativeElement.value;
-    const newIngridient = new Ingridient(ingName, ingAmount );
+  onAddItem(form: NgForm){
+    const value = form.value;
+    const newIngridient = new Ingridient(value.name, value.amount );
     /* this.ingridientAdded.emit(newIngridient); */
     this.shoppingListService.onIngridientAdded(newIngridient);
   }

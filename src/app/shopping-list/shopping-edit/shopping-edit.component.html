@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
       <!-- FORM PER L'INSERIMENTO DEL TIPO E DELLA QUANTITA' -->
-    <form>
+    <form (ngSubmit)="onAddItem(f)" #f="ngForm">
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
@@ -9,23 +9,38 @@
             type="text"
             id="name"
             class="form-control"
-            #nameInput/>
+            ngModel
+            name="name"
+            required
+
+            />
         </div>
         <div class="col-sm-2 from-group">
           <label for="amount">Amount</label>
           <input
-            type="numer"
+            type="number"
             id="amount"
             class="form-control"
-            #amountInput />
+            ngModel
+            name="amount"
+            required
+            pattern="^[1-9]+[0-9]*$"
+             />
         </div>
       </div>
       <div class="row">
           <!-- PULSANTI PER INTERAGIRE CON LA LISTA -->
         <div class="col-xs-12">
-          <button class="btn btn-success" type="submit" (click)="onAddItem()">Add</button>
-          <button class="btn btn-danger" type="submit">Delete</button>
-          <button class="btn btn-primary" type="submit">clear</button>
+          <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="!f.valid" >{{ editMode ?  'Update' : 'Add' }}</button>
+          <button
+          class="btn btn-danger"
+          type="button">Delete</button>
+          <button
+          class="btn btn-primary"
+          type="button">clear</button>
         </div>
       </div>
     </form>

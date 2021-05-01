@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 export class ShoppingListService{
   ingridientsChange = new Subject<Ingridient[]>();
+  startedEditing = new Subject<number>();
   private ingridients:Ingridient[] = [
     new Ingridient('Apples',10),
     new Ingridient('Tomatoes',5),
@@ -11,6 +12,10 @@ export class ShoppingListService{
 
   getIingridients(){
     return this.ingridients.slice(); // otteniamo sempre una copia del nostro array.
+  }
+
+  getIngridient(index:number){
+    return this.ingridients[index];
   }
   onIngridientAdded(ingridient: Ingridient){
     this.ingridients.push(ingridient);
@@ -23,6 +28,11 @@ export class ShoppingListService{
      // this.onIngridientAdded(ingridient);
     // }
     this.ingridients.push(...ingridients);
+    this.ingridientsChange.next(this.ingridients.slice())
+  }
+
+  updateIngridient(index:number, newIngridient:Ingridient){
+    this.ingridients[index] = newIngridient;
     this.ingridientsChange.next(this.ingridients.slice())
   }
 

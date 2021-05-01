@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { Ingridient } from '../../shared/ingridients.model';
 import { ShoppingListService } from '../shopping-list.service';
@@ -9,7 +10,12 @@ import { ShoppingListService } from '../shopping-list.service';
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css']
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnInit, OnDestroy {
+  @ViewChild('f') shoppingListForm : NgForm;
+  subscription: Subscription;
+  editMode = false;
+  editedItemIndex: number;
+  editedItem: Ingridient;
    // con il nuovo metodo ngForm, non mi servono piu' questi riferimenti.
   /* @ViewChild('nameInput', { static : true }) nameInputRef: ElementRef;
   @ViewChild('amountInput', { static : true }) amountInputRef: ElementRef; */
@@ -18,6 +24,16 @@ export class ShoppingEditComponent implements OnInit {
   constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit(): void {
+    this.shoppingListService.startedEditing
+        .subscribe((index:number) => {
+          this.editedItemIndex = index;
+          this.editMode = true;
+          this.editedItem = this.shoppingListService.getIngridient(index);
+          this.shoppingListForm.setValue({
+            name: this.editedItem.name,
+            amount: this.editedItem.amount
+          })
+        });
   }
 
   // tslint:disable-next-line: typedef
@@ -26,5 +42,9 @@ export class ShoppingEditComponent implements OnInit {
     const newIngridient = new Ingridient(value.name, value.amount );
     /* this.ingridientAdded.emit(newIngridient); */
     this.shoppingListService.onIngridientAdded(newIngridient);
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 }

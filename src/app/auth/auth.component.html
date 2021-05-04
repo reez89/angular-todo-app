@@ -1,17 +1,42 @@
 <div class="row">
   <div class="col-xs-12 col-md-6 col-md-offset-3" >
-    <form d-flex >
+    <div class="alert alert-danger" *ngIf="error">
+      <p>{{ error }}</p>
+    </div>
+    <div *ngIf="isLoading" style="text-align:center">
+      <app-loading-sppinner></app-loading-sppinner>
+    </div>
+    <form d-flex #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" class="from-control" id="email">
+        <input
+        type="text"
+        class="from-control"
+        id="email"
+        ngModel
+        name="email"
+        required
+        email>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="text" class="from-control" id="password">
+        <input
+        type="text"
+        class="from-control"
+        id="password"
+        ngModel
+        name="password"
+        requird minlength="6">
       </div>
       <div>
-        <button class="btn btn-primary">Sign Up</button>
-        <button class="btn btn-primary">Switch to Login</button>
+        <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!authForm.valid">{{ isLoginMode ? 'Login' : 'Sign Up'}}</button>
+        <button
+        class="btn btn-primary"
+        (click)="onSwitchMode()"
+        type="button">Switch to {{ isLoginMode ? 'Sign Up' : 'Login'}}</button>
       </div>
     </form>
   </div>

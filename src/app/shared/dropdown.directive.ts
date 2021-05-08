@@ -7,7 +7,10 @@ import { Directive, HostBinding, HostListener } from '@angular/core';
 export class DropdownDirective {
   @HostBinding('class.open') isOpen = false;
 
+  // tslint:disable-next-line: typedef
   @HostListener('click') toggleOpen(){
     this.isOpen = !this.isOpen;
+    console.log('ho cliccato');
+
   }
 }

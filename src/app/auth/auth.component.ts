@@ -41,7 +41,7 @@ export class AuthComponent {
       this.router.navigate(['/recipes']);
     },
     // tslint:disable-next-line: no-unused-expression
-    errorMessage =>{
+    errorMessage => {
       console.log(errorMessage);
       this.error = errorMessage;
       this.isLoading = false;

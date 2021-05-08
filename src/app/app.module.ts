@@ -13,8 +13,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './shared/alert/alert.component';
 
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
-import { RecipesModules } from './recipes/recipe.module';
+
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -29,8 +28,6 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ShoppingListModule,
-    RecipesModules,
     SharedModule
   ],
   providers: [

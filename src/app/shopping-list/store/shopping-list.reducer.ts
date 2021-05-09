@@ -25,6 +25,25 @@ export function shoppingListReducer(
         ...state,
         ingridients: [...state.ingridients, ...action.payload]
       };
+    case ShoppingListActions.UPDATE_INGRIDIENT:
+      const ingridient = state.ingridients[action.payload.index];
+      const updateIngridient = {
+        ...ingridient,
+        ...action.payload.ingridient
+      };
+      const updateIngridients = [...state.ingridients];
+      updateIngridients[action.payload.index] = updateIngridient;
+      return {
+        ...state,
+        ingridients: updateIngridients
+      };
+    case ShoppingListActions.DELETE_INGRIDIENT:
+      return {
+        ...state,
+        ingridients: state.ingridients.filter((ig, igIndex) =>{
+          return igIndex !== action.payload;
+        })
+        }
     default:
       return state;
   }

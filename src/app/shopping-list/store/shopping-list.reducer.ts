@@ -3,15 +3,26 @@ import { Ingridient } from './../../shared/ingridients.model';
 
 import * as ShoppingListActions from './shopping-list.action';
 
-const initialState = {
+export interface State{
+  ingridients: Ingridient[];
+  editedIngridient: Ingridient;
+  editedIngridientIndex: number;
+}
+
+export interface AppState {
+  shoppingList: State;
+}
+const initialState: State = {
   ingridients: [
     new Ingridient('Apples', 10),
     new Ingridient('Tomatoes', 5),
-  ]
+  ],
+  editedIngridient: null,
+  editedIngridientIndex: -1
 };
 
 export function shoppingListReducer(
-  state = initialState,
+  state: State = initialState,
   action: ShoppingListActions.ShoppingListActions
   ) {
   switch (action.type) {
@@ -40,10 +51,10 @@ export function shoppingListReducer(
     case ShoppingListActions.DELETE_INGRIDIENT:
       return {
         ...state,
-        ingridients: state.ingridients.filter((ig, igIndex) =>{
+        ingridients: state.ingridients.filter((ig, igIndex) => {
           return igIndex !== action.payload;
         })
-        }
+        };
     default:
       return state;
   }

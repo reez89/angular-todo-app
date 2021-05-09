@@ -7,6 +7,7 @@ import { Ingridient } from '../../shared/ingridients.model';
 import { ShoppingListService } from '../shopping-list.service';
 
 import * as ShoppingListActions from '../store/shopping-list.action';
+import * as fromShoppingList from '../store/shopping-list.reducer';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -19,18 +20,18 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editMode = false;
   editedItemIndex: number;
   editedItem: Ingridient;
-  constructor(private shoppingListService: ShoppingListService, private store: Store<{shoppingList: { ingridients: Ingridient[] }}>) {}
+  constructor(private shoppingListService: ShoppingListService, private store: Store<fromShoppingList.AppState>) {}
 
   ngOnInit(): void {
     this.subscription =  this.shoppingListService.startedEditing
-        .subscribe((index:number) => {
+        .subscribe((index: number) => {
           this.editedItemIndex = index;
           this.editMode = true;
           this.editedItem = this.shoppingListService.getIngridient(index);
           this.shoppingListForm.setValue({
             name: this.editedItem.name,
             amount: this.editedItem.amount
-          })
+          });
         });
   }
 
@@ -38,7 +39,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onAddItem(form: NgForm){
     const value = form.value;
     const newIngridient = new Ingridient(value.name, value.amount );
-    if(this.editMode){
+    if (this.editMode){
       /* this.shoppingListService.updateIngridient(this.editedItemIndex, newIngridient); */
       this.store.dispatch(new ShoppingListActions.UpdateIngridients(
         {index: this.editedItemIndex, ingridient: newIngridient})

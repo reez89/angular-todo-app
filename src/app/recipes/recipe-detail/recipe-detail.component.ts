@@ -18,7 +18,6 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     /* const id = this.route.snapshot.params['id']; */ // funziona solo la prima volta che carichiamo la pagina.
-
     this.route.params
         .subscribe(
           (params: Params) => {

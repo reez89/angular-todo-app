@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Ingridient } from '../shared/ingridients.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe.model';
+import { Store } from '@ngrx/store';
+import * as ShoppingListActions from '../shopping-list/store/shopping-list.action';
 
 @Injectable()
 export class RecipeService {
@@ -31,7 +33,9 @@ export class RecipeService {
   ]; */
   private recipes: Recipe[] = [];
 
-constructor(private shoppingListService: ShoppingListService){}
+constructor(
+  private shoppingListService: ShoppingListService,
+  private store: Store< {shoppingList: { ingridients: Ingridient[] }}>){}
 
   // tslint:disable-next-line: typedef
   getRecipes() {
@@ -46,7 +50,7 @@ constructor(private shoppingListService: ShoppingListService){}
 
   // tslint:disable-next-line: typedef
   addIngridientsToShippingList(ingridients: Ingridient[]){
-    this.shoppingListService.addIngridients(ingridients);
+    this.store.dispatch(new ShoppingListActions.AddIngridients(ingridients));
   }
 
   addRecipe(recipe: Recipe){

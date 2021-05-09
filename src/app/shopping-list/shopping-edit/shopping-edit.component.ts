@@ -1,9 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { Ingridient } from '../../shared/ingridients.model';
 import { ShoppingListService } from '../shopping-list.service';
+
+import * as ShoppingListActions from '../store/shopping-list.action';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -16,12 +19,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editMode = false;
   editedItemIndex: number;
   editedItem: Ingridient;
-   // con il nuovo metodo ngForm, non mi servono piu' questi riferimenti.
-  /* @ViewChild('nameInput', { static : true }) nameInputRef: ElementRef;
-  @ViewChild('amountInput', { static : true }) amountInputRef: ElementRef; */
-  // tslint:disable-next-line: max-line-length
-  /* @Output() ingridientAdded = new EventEmitter<Ingridient>(); */ // <{name: string, amount: number}> a questa dichiarazione possiamo sostituire direttamente il file condiviso Ingridient
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(private shoppingListService: ShoppingListService, private store: Store<{shoppingList: { ingridients: Ingridient[] }}>) {}
 
   ngOnInit(): void {
     this.subscription =  this.shoppingListService.startedEditing
@@ -40,11 +38,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onAddItem(form: NgForm){
     const value = form.value;
     const newIngridient = new Ingridient(value.name, value.amount );
-    /* this.ingridientAdded.emit(newIngridient); */
     if(this.editMode){
       this.shoppingListService.updateIngridient(this.editedItemIndex, newIngridient);
     }else{
-      this.shoppingListService.onIngridientAdded(newIngridient);
+      this.store.dispatch(new ShoppingListActions.AddIngridient(newIngridient));
     }
     this.editMode = false;
     form.reset();

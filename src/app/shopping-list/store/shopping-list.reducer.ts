@@ -9,9 +9,6 @@ export interface State{
   editedIngridientIndex: number;
 }
 
-export interface AppState {
-  shoppingList: State;
-}
 const initialState: State = {
   ingridients: [
     new Ingridient('Apples', 10),

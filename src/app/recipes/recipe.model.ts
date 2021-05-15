@@ -1,15 +1,15 @@
-import { Ingridient } from "../shared/ingridients.model";
+import { Ingredient } from '../shared/ingredient.model';
 
 export class Recipe {
   public name: string;
   public description: string;
-  public imagePath: string; // ABBIAMO CREATO UN MODELLO (BLUEPRINTS) , DI COME IL NOSTRO OGGETTO DOVRà ESSERE ALLA FINE, O PER LO MENO DI COME PENSIAMO CHE LO SARA', A QUESTO SERVONO I MODELLI.
-  public ingridients: Ingridient[];
+  public imagePath: string;
+  public ingredients: Ingredient[];
 
-  constructor(name: string, description: string, imagePath: string, ingridients: Ingridient[]) {
+  constructor(name: string, desc: string, imagePath: string, ingredients: Ingredient[]) {
     this.name = name;
-    this.description = description;
+    this.description = desc;
     this.imagePath = imagePath;
-    this.ingridients = ingridients;
+    this.ingredients = ingredients;
   }
 }

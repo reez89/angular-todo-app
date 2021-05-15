@@ -1,8 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-// tslint:disable-next-line: import-spacing
-import { Recipe } from  '../recipe.model';
-import { RecipeService } from '../recipe.service';
+import { Store } from '@ngrx/store';
+import { map, switchMap } from 'rxjs/operators';
+
+import { Recipe } from '../recipe.model';
+import * as fromApp from '../../store/app.reducer';
+import * as RecipesActions from '../store/recipe.actions';
+import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -10,36 +14,50 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  @Input() recipe: Recipe;
+  recipe: Recipe;
   id: number;
-  constructor(private recipeService: RecipeService,
-              private route: ActivatedRoute,
-              private router: Router) { }
 
-  ngOnInit(): void {
-    /* const id = this.route.snapshot.params['id']; */ // funziona solo la prima volta che carichiamo la pagina.
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store<fromApp.AppState>
+  ) {}
+
+  ngOnInit() {
     this.route.params
-        .subscribe(
-          (params: Params) => {
-            this.id = +params['id'];
-            this.recipe = this.recipeService.getRecipe(this.id);
-          }
-        );
+      .pipe(
+        map(params => {
+          return +params['id'];
+        }),
+        switchMap(id => {
+          this.id = id;
+          return this.store.select('recipes');
+        }),
+        map(recipesState => {
+          return recipesState.recipes.find((recipe, index) => {
+            return index === this.id;
+          });
+        })
+      )
+      .subscribe(recipe => {
+        this.recipe = recipe;
+      });
   }
 
-  // tslint:disable-next-line: typedef
-  addToShippingList(){
-    this.recipeService.addIngridientsToShippingList(this.recipe.ingridients);
+  onAddToShoppingList() {
+    // this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+    this.store.dispatch(
+      ShoppingListActions.addIngredients({ingredients: this.recipe.ingredients})
+    );
   }
 
   onEditRecipe() {
-    this.router.navigate(['edit'], {relativeTo: this.route});
+    this.router.navigate(['edit'], { relativeTo: this.route });
     // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
-
   }
 
-  onDelete(){
-    this.recipeService.deleteRecipe(this.id);
+  onDeleteRecipe() {
+    this.store.dispatch(RecipesActions.deleteRecipe({index: this.id}));
     this.router.navigate(['/recipes']);
   }
 }

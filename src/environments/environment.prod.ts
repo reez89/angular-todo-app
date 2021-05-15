@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  firebaseAPIkey: 'AIzaSyCOLTU0ABCoSO9EWPXvFN1z5CgC11VaKEA'
+  firebaseAPIKey: 'https://todo-app-84ca8-default-rtdb.europe-west1.firebasedatabase.app/'
 };

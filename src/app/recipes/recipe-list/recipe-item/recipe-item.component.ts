@@ -1,7 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
-import { Recipe } from '../../recipe.model';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { RecipeService } from '../../recipe.service';
+import { Recipe } from '../../recipe.model';
 
 @Component({
   selector: 'app-recipe-item',
@@ -9,18 +8,9 @@ import { RecipeService } from '../../recipe.service';
   styleUrls: ['./recipe-item.component.css']
 })
 export class RecipeItemComponent implements OnInit {
-  @Input() item: Recipe;
-  // tslint:disable-next-line: max-line-length
-  // questo item fa riferimento alla classe che abbiamo dichiarato in recipeListComponent, e quindi sarà riutilizzat nell'ngFor per visualizzare i dati.
+  @Input() recipe: Recipe;
   @Input() index: number;
 
- /*  @Output() recipeSelected = new EventEmitter<void>(); // void perchè non contiene nessuna informazione */
-  constructor(private recipeService: RecipeService) {}
-
-   ngOnInit(): void {}
-
-   /* onSelected(){
-    this.recipeService.recipeSelected.emit(this.item);
-  } */
-
+  ngOnInit() {
+  }
 }
